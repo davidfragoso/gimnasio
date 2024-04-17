@@ -19,16 +19,20 @@ const showingNavigationDropdown = ref(false);
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
+                            <!-- <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                     <ApplicationLogo
+                                        id="logo"
                                         class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
                                     />
                                 </Link>
-                            </div>
+                            </div> -->
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')" style="margin-right: 25rem;margin-left: -15rem;">
+                                    <img id="logo" src="../img/logo-sb.png">
+                                </NavLink>
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
@@ -116,7 +120,6 @@ const showingNavigationDropdown = ref(false);
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
-
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                         <div class="px-4">
@@ -125,7 +128,6 @@ const showingNavigationDropdown = ref(false);
                             </div>
                             <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
                         </div>
-
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
@@ -150,3 +152,11 @@ const showingNavigationDropdown = ref(false);
         </div>
     </div>
 </template>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap");
+#logo{
+    width: 7rem;
+    margin-bottom: 18px;
+}
+</style>
