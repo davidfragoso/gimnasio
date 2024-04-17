@@ -1,6 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import BarcodeScanner from '@/components/BarcodeScanner.vue'; // Asegúrate de ajustar la ruta según la ubicación de tu componente
+
 </script>
 
 <template>
@@ -18,5 +20,7 @@ import { Head } from '@inertiajs/vue3';
                 </div>
             </div>
         </div>
+        <BarcodeScanner />
+
     </AuthenticatedLayout>
 </template>

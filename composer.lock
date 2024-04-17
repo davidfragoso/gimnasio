@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4ec9c265f02ca1e04b88caa3f0153b8",
+    "content-hash": "dc421460c14438ed323562a4fe7454df",
     "packages": [
         {
             "name": "brick/math",
@@ -3240,6 +3240,62 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "resend/resend-php",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/resend/resend-php.git",
+                "reference": "8fa3e86afa8777b1f1e4c89900ec1ccf7c723c7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/resend/resend-php/zipball/8fa3e86afa8777b1f1e4c89900ec1ccf7c723c7c",
+                "reference": "8fa3e86afa8777b1f1e4c89900ec1ccf7c723c7c",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.5",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.13",
+                "pestphp/pest": "^1.22",
+                "pestphp/pest-plugin-mock": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Resend.php"
+                ],
+                "psr-4": {
+                    "Resend\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Resend and contributors",
+                    "homepage": "https://github.com/jayanratna/resend-php/contributors"
+                }
+            ],
+            "description": "Resend PHP library.",
+            "keywords": [
+                "api",
+                "client",
+                "php",
+                "resend",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/resend/resend-php/issues",
+                "source": "https://github.com/resend/resend-php/tree/v0.1.0"
+            },
+            "time": "2023-02-01T04:16:03+00:00"
         },
         {
             "name": "spatie/laravel-permission",

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Inertia\Response;
+use Resend\Resend;
 
 class PasswordResetLinkController extends Controller
 {
@@ -33,19 +33,19 @@ class PasswordResetLinkController extends Controller
             'email' => 'required|email',
         ]);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+        $email = $request->input('email');
 
-        if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
-        }
+        // Enviar el correo electrónico utilizando Resend
+        $apiKey = env('RESEND_API_KEY');
+        $resend = Resend::client($apiKey);
 
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
+        $resend->emails->send([
+            'from' => 'your_email@example.com',
+            'to' => $email,
+            'subject' => 'Restablecer contraseña',
+            'html' => 'Aquí va tu mensaje HTML para restablecer la contraseña.',
         ]);
+
+        return back()->with('status', 'Correo electrónico de restablecimiento de contraseña enviado correctamente.');
     }
 }

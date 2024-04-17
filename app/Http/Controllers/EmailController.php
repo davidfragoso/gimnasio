@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use App\Models\SysAdmin;
+use App\Models\Cliente;
 use Resend\Resend;
 
 class EmailController extends Controller
@@ -22,16 +22,16 @@ class EmailController extends Controller
         }
 
         // Obtener la lista de usuarios y administradores con sus correos electrónicos
+        $clientes = Cliente::pluck('email')->all();
         $users = User::pluck('email')->all();
-        $admins = SysAdmin::pluck('email')->all();
 
         $apiKey = env('RESEND_API_KEY');
         $resend = Resend::client($apiKey);
 
         // Enviar correos electrónicos a los usuarios
-        foreach ($users as $email) {
+        foreach ($clientes as $email) {
             $resend->emails->send([
-                'from' => 'your_email@example.com',
+                'from' => 'sistema@admin.com',
                 'to' => $email,
                 'subject' => $request->input('subject'),
                 'html' => $request->input('html'),
@@ -39,7 +39,7 @@ class EmailController extends Controller
         }
 
         // Enviar correos electrónicos a los administradores
-        foreach ($admins as $email) {
+        foreach ($users as $email) {
             $resend->emails->send([
                 'from' => 'your_email@example.com',
                 'to' => $email,
