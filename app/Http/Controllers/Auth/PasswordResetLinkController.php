@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
-use Resend\Resend;
+use App\Models\User;
+use Resend as ResendPackage;
 
 class PasswordResetLinkController extends Controller
 {
@@ -33,19 +34,31 @@ class PasswordResetLinkController extends Controller
             'email' => 'required|email',
         ]);
 
+        // Obtén el correo electrónico del formulario
         $email = $request->input('email');
 
-        // Enviar el correo electrónico utilizando Resend
+        // Verifica si el usuario existe
+        $user = User::where('email', $email)->first();
+
+        // Si el usuario no existe, muestra un mensaje de error
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'email' => [trans('passwords.user')],
+            ]);
+        }
+
+        // Envía el correo electrónico utilizando el servicio Resend
         $apiKey = env('RESEND_API_KEY');
-        $resend = Resend::client($apiKey);
+        $resend = ResendPackage::client($apiKey);
 
         $resend->emails->send([
-            'from' => 'your_email@example.com',
+            'from' => 'programsouth@lilspam.com',
             'to' => $email,
-            'subject' => 'Restablecer contraseña',
-            'html' => 'Aquí va tu mensaje HTML para restablecer la contraseña.',
+            'subject' => 'Reset Your Password',
+            'html' => 'Here is the link to reset your password: <a href="#">Reset Password</a>',
         ]);
 
-        return back()->with('status', 'Correo electrónico de restablecimiento de contraseña enviado correctamente.');
+        // Redirige de vuelta con un mensaje de éxito
+        return back()->with('status', 'Password reset link sent successfully');
     }
 }
