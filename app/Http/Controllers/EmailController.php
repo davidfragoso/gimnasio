@@ -31,7 +31,7 @@ class EmailController extends Controller
         // Enviar correos electrónicos a los usuarios
         foreach ($clientes as $email) {
             $resend->emails->send([
-                'from' => 'sistema@admin.com',
+                'from' => 'programsouth@lilspam.com',
                 'to' => $email,
                 'subject' => $request->input('subject'),
                 'html' => $request->input('html'),
@@ -41,7 +41,7 @@ class EmailController extends Controller
         // Enviar correos electrónicos a los administradores
         foreach ($users as $email) {
             $resend->emails->send([
-                'from' => 'your_email@example.com',
+                'from' => 'programsouth@lilspam.com',
                 'to' => $email,
                 'subject' => $request->input('subject'),
                 'html' => $request->input('html'),
