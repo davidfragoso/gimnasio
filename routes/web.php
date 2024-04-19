@@ -3,6 +3,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\BarcodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,22 +15,30 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/csrf-token', function () {
+    return response()->json(['token' => csrf_token()]);
+});
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
-        return redirect()->route('login'); // Redirige al inicio de sesión si el usuario no está autenticado
+        return redirect()->route('login'); 
     });
+    Route::get('/generate-barcode', [BarcodeController::class, 'generateBarcode'])->name('generateBarcode');
+    Route::post('/generate-barcode', [BarcodeController::class, 'generateBarcode'])->name('generateBarcode');
+
 
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->middleware(['verified'])->name('dashboard');
+
+    Route::get('/clientes', function () {
+        return Inertia::render('Clientes');
+    })->middleware(['verified'])->name('clientes');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Redirige al inicio de sesión después de cerrar sesión
 Route::post('/logout', function () {
     auth()->logout();
     return redirect()->route('login');

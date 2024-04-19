@@ -1,41 +1,37 @@
 <template>
-    <div>
-      <input type="text" v-model="barcodeValue" @keyup.enter="onBarcodeScanned">
-      <button @click="onBarcodeScanned">Escanear</button>
-      <div v-if="scannedBarcode">
-        <img :src="scannedBarcode" alt="Código de barras escaneado">
-      </div>
+  <div style="text-align: center;">
+    <input type="text" v-model="barcodeData" placeholder="Ingrese el valor del código de barras">
+    <button @click="generateBarcodeUrl">Generar Código de Barras</button>
+    <div v-if="barcodeUrl">
+      <img :src="barcodeUrl" alt="Código de barras generado">
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        barcodeValue: '',
-        scannedBarcode: ''
-      };
-    },
-    methods: {
-      async onBarcodeScanned() {
+  </div>
+</template>
 
-        try {
-          const response = await fetch(`/generate-barcode?type=C39&value=${this.barcodeValue}`);
-          if (response.ok) {
-            const barcodeData = await response.blob();
-            this.scannedBarcode = URL.createObjectURL(barcodeData);
-          } else {
-            console.error('Failed to generate barcode');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
+<script>
+export default {
+  data() {
+    return {
+      barcodeData: '', 
+      barcodeUrl: ''   
+    };
+  },
+  methods: {
+    generateBarcodeUrl() {
+      if (!this.barcodeData) {
+        alert('Por favor, ingrese un valor para el código de barras.');
+        return;
       }
+      
+      const code = 'Code39'; 
+      const baseUrl = 'https://barcode.tec-it.com/barcode.ashx';
+      const url = `${baseUrl}?data=${this.barcodeData}&code=${code}`;
+      this.barcodeUrl = url;
     }
-  };
-  </script>
-  
-  <style>
-  /* Estilos opcionales */
-  </style>
-  
+  }
+};
+</script>
+
+<style>
+/* Estilos opcionales */
+</style>

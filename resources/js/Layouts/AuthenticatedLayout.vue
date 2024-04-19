@@ -33,8 +33,8 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')" style="margin-right: 25rem;margin-left: -15rem;">
                                     <img id="logo" src="../img/logo-sb.png">
                                 </NavLink>
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                <NavLink :href="route('clientes')" :active="route().current('clientes')">
+                                    Clientes
                                 </NavLink>
                             </div>
                         </div>

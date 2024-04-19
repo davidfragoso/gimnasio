@@ -21,7 +21,6 @@ class EmailController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        // Obtener la lista de usuarios y administradores con sus correos electrónicos
         $clientes = Cliente::pluck('email')->all();
         $users = User::pluck('email')->all();
 
