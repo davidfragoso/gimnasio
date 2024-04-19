@@ -1,29 +1,61 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
+const showList = ref(false)
+const showForm = ref(true)
 </script>
 
 <template>
-    <Head title="Clientes" />
+    <Head title="Membresías" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Clientes</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Membresías <button @click="showList = !showList; showForm = !showForm" class="nav-button">Ver lista de membresias</button></h2>
+            
         </template>
-
-        <div class="py-12">
+        <div v-if="showList">
+            <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">                
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <div class="flex justify-center" id="t-container">
-                            <h1 id="titulo">REGISTRO DE CLIENTES</h1>
+                            <h1 id="titulo">LISTA DE MEMBRESÍAS</h1>
                         </div>
                         <form id="form-log">
                             <div>
-                                <InputLabel id="label-txt"  value="Email" /><br>
+                                
+                            </div><br>
+                            <div class="mt-4">
+                                
+                            </div><br>
+                            <div class="block mt-4">
+                                
+                            </div><br><br>
+                            <div class="flex items-center justify-center mt-4">
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div  v-if="showForm">
+            <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">                
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <div class="flex justify-center" id="t-container">
+                            <h1 id="titulo">REGISTRO DE MEMBRESÍAS</h1>
+                        </div>
+                        <form id="form-memb">
+                            <div>
+                                <Label id="label-txt">Nombre</Label><br>
                                 <Input
                                     id="email"
-                                    type="email"
+                                    type="text"
                                     class="mt-1 block w-full"
                                     
                                     required
@@ -33,10 +65,46 @@ import { Head } from '@inertiajs/vue3';
                                 <InputError class="mt-2"/>
                             </div><br>
                             <div class="mt-4">
-                                <InputLabel id="label-txt" for="password" value="Password" /><br>
+                                <Label id="label-txt">Apellido</Label><br>
                                 <Input
                                     id="password"
-                                    type="password"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                    
+                                    required
+                                    autocomplete="current-password"
+                                />
+                                <InputError class="mt-2"  />
+                            </div><br>
+                            <div class="mt-4">
+                                <Label id="label-txt">Fecha Inicio</Label><br>
+                                <Input
+                                    id="password"
+                                    type="date"
+                                    class="mt-1 block w-full"
+                                    
+                                    required
+                                    autocomplete="current-password"
+                                />
+                                <InputError class="mt-2"  />
+                            </div><br>
+                            <div class="mt-4">
+                                <Label id="label-txt">Fecha Final</Label><br>
+                                <Input
+                                    id="password"
+                                    type="date"
+                                    class="mt-1 block w-full"
+                                    
+                                    required
+                                    autocomplete="current-password"
+                                />
+                                <InputError class="mt-2"  />
+                            </div><br>
+                            <div class="mt-4">
+                                <Label id="label-txt">Importe</Label><br>
+                                <Input
+                                    id="password"
+                                    type="number"
                                     class="mt-1 block w-full"
                                     
                                     required
@@ -45,27 +113,15 @@ import { Head } from '@inertiajs/vue3';
                                 <InputError class="mt-2"  />
                             </div><br>
                             <div class="block mt-4">
-                                <label class="flex items-center">
-                                    <Checkbox id="checkbox" name="remember"  />
-                                    <span id="check-txt" class="ml-2 text-sm text-gray-600 dark:text-gray-400"
-                                        >Mantener sesion iniciada</span
-                                    >
-                                </label>
+                                
                             </div><br><br>
                             <div class="flex items-center justify-center mt-4">
-                                <Link
-                                    
-                                    id="forgot-psw-txt"
-                                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                                >
-                                    ¿Olvidaste tu contraseña?
-                                </Link>
                                 <PrimaryButton
                                     class="ml-4"
                                     id="btn-menu"
                                     
                                 >
-                                    Entrar
+                                    Crear
                                 </PrimaryButton>
                             </div>
                         </form>
@@ -73,9 +129,7 @@ import { Head } from '@inertiajs/vue3';
                 </div>
             </div>
         </div>
-
-        
-
+        </div>
     </AuthenticatedLayout>
 </template>
 
@@ -89,15 +143,16 @@ import { Head } from '@inertiajs/vue3';
     margin-bottom: 5rem;
     margin-top: 1rem;
 }
-#form-log {
+#form-memb {
+    height: auto;
     font-family: "Quicksand", sans-serif;    
     border-radius: 15px;
     border: 2px solid;
     border-color: #df9800;
-    height: 35rem;
     background-color: #556b7de3;
     padding: 2.5rem;
     padding-top: 4rem; 
+    --overflow: auto;
 }
 #label-txt {
     font-size: 28px;
@@ -150,6 +205,10 @@ import { Head } from '@inertiajs/vue3';
 #btn-menu:active {
     background-color: #df9800;
     transform: translateY(4px);
+}
+.nav-button {
+    border: 2px solid;
+    font-style: oblique;
 }
 #email,
 #password {

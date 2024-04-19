@@ -34,6 +34,10 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('Clientes');
     })->middleware(['verified'])->name('clientes');
 
+    Route::get('/memberships', function () {
+        return Inertia::render('Memberships');
+    })->middleware(['verified'])->name('memberships');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
