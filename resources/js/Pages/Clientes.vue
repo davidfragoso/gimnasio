@@ -1,6 +1,10 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head } from "@inertiajs/vue3";
+import { ref } from "vue";
+
+const showList = ref(false);
+const showForm = ref(true);
 </script>
 
 <template>
@@ -8,74 +12,122 @@ import { Head } from '@inertiajs/vue3';
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Clientes</h2>
+            <h2
+                class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
+            >
+                Clientes
+                <button
+                    @click="
+                        showList = !showList;
+                        showForm = !showForm;
+                    "
+                    class="nav-button"
+                >
+                    Ver lista de clientes
+                </button>
+            </h2>
         </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">                
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <div class="flex justify-center" id="t-container">
-                            <h1 id="titulo">REGISTRO DE CLIENTES</h1>
-                        </div>
-                        <form id="form-log">
-                            <div>
-                                <InputLabel id="label-txt"  value="Email" /><br>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    class="mt-1 block w-full"
-                                    
-                                    required
-                                    autofocus
-                                    autocomplete="username"
-                                />
-                                <InputError class="mt-2"/>
-                            </div><br>
-                            <div class="mt-4">
-                                <InputLabel id="label-txt" for="password" value="Password" /><br>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    class="mt-1 block w-full"
-                                    
-                                    required
-                                    autocomplete="current-password"
-                                />
-                                <InputError class="mt-2"  />
-                            </div><br>
-                            <div class="block mt-4">
-                                <label class="flex items-center">
-                                    <Checkbox id="checkbox" name="remember"  />
-                                    <span id="check-txt" class="ml-2 text-sm text-gray-600 dark:text-gray-400"
-                                        >Mantener sesion iniciada</span
-                                    >
-                                </label>
-                            </div><br><br>
-                            <div class="flex items-center justify-center mt-4">
-                                <Link
-                                    
-                                    id="forgot-psw-txt"
-                                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                                >
-                                    ¿Olvidaste tu contraseña?
-                                </Link>
-                                <PrimaryButton
-                                    class="ml-4"
-                                    id="btn-menu"
-                                    
-                                >
-                                    Entrar
-                                </PrimaryButton>
+        <div v-if="showList">
+            <div class="py-12">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div
+                        class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
+                    >
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            <div class="flex justify-center" id="t-container">
+                                <h1 id="titulo">LISTA DE CLIENTES</h1>
                             </div>
-                        </form>
+                            <form id="form-clients">
+                                <div class="list-headers">
+                                    <Label id="label-txt">ID</Label>
+                                    <Label id="label-txt">Nombre</Label>
+                                    <Label id="label-txt">Apellido</Label>
+                                    <Label id="label-txt">Correo</Label>
+                                    <Label id="label-txt">Estatus</Label>
+                                </div>
+                                <div class="list-content">
+                                    <table style="width: 100%;">
+                                        <tr style="display: flex;justify-content: space-between;">
+                                            <td><Label id="label-txt">01</Label></td>
+                                            <td><Label id="label-txt">Manolo</Label></td>
+                                            <td><Label id="label-txt">Sanchez</Label></td>
+                                            <td><Label id="label-txt">MSanchez@mail.com</Label></td>
+                                            <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
+                                            <td><Label id="label-txt">Vigente</Label></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        
-
+        <div v-if="showForm">
+            <div class="py-12">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div
+                        class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
+                    >
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            <div class="flex justify-center" id="t-container">
+                                <h1 id="titulo">REGISTRO DE CLIENTES</h1>
+                            </div>
+                            <form id="form-clients">
+                                <div>
+                                    <Label id="label-txt">Nombre</Label><br />
+                                    <Input
+                                        id="email"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        required
+                                        autofocus
+                                        autocomplete="username"
+                                    />
+                                    <InputError class="mt-2" />
+                                </div>
+                                <br />
+                                <div class="mt-4">
+                                    <Label id="label-txt">Apellido</Label><br />
+                                    <Input
+                                        id="password"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        required
+                                        autocomplete="current-password"
+                                    />
+                                    <InputError class="mt-2" />
+                                </div>
+                                <br />
+                                <div class="mt-4">
+                                    <Label id="label-txt">Correo</Label><br />
+                                    <Input
+                                        id="password"
+                                        type="email"
+                                        class="mt-1 block w-full"
+                                        required
+                                        autocomplete="current-password"
+                                    />
+                                    <InputError class="mt-2" />
+                                </div>
+                                <br />
+                                <div class="block mt-4">
+                                    <label class="flex items-center"> </label>
+                                </div>
+                                <br /><br />
+                                <div
+                                    class="flex items-center justify-center mt-4"
+                                >
+                                    <PrimaryButton class="ml-4" id="btn-menu">
+                                        Registrar cliente
+                                    </PrimaryButton>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </AuthenticatedLayout>
 </template>
 
@@ -89,15 +141,16 @@ import { Head } from '@inertiajs/vue3';
     margin-bottom: 5rem;
     margin-top: 1rem;
 }
-#form-log {
-    font-family: "Quicksand", sans-serif;    
+#form-clients {
+    height: auto;
+    font-family: "Quicksand", sans-serif;
     border-radius: 15px;
     border: 2px solid;
     border-color: #df9800;
-    height: 35rem;
     background-color: #556b7de3;
     padding: 2.5rem;
-    padding-top: 4rem; 
+    padding-top: 4rem;
+    --overflow: auto;
 }
 #label-txt {
     font-size: 28px;
@@ -114,13 +167,13 @@ import { Head } from '@inertiajs/vue3';
     width: 24px;
     height: 24px;
 }
-#checkbox:hover{
+#checkbox:hover {
     outline-style: solid;
     outline-color: #fcaf09;
     cursor: pointer;
 }
 #checkbox:active,
-#checkbox:focus{
+#checkbox:focus {
     outline-style: solid;
     outline-color: #fcaf09;
     background-color: #fcaf09;
@@ -128,7 +181,7 @@ import { Head } from '@inertiajs/vue3';
 #btn-menu {
     font-family: "Quicksand", sans-serif;
     text-align: center;
-    width: 8rem;
+    width: 10rem;
     padding: 15px;
     background-color: #ffffff00;
     color: white;
@@ -151,6 +204,10 @@ import { Head } from '@inertiajs/vue3';
     background-color: #df9800;
     transform: translateY(4px);
 }
+.nav-button {
+    border: 2px solid;
+    font-style: oblique;
+}
 #email,
 #password {
     height: 2rem;
@@ -171,5 +228,14 @@ import { Head } from '@inertiajs/vue3';
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.list-headers {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #fcaf09;
+}
+.list-content {
+    margin-top: 1rem;
+    --border: 2px solid;
 }
 </style>
