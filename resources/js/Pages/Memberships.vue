@@ -55,7 +55,7 @@ const showForm = ref(true);
               <div class="flex justify-center" id="t-container">
                 <div><h1 id="titulo">REGISTRO DE MEMBRESÍAS</h1></div>
               </div>
-              <form id="form-memb" class="grid grid-cols-2 gap-4">
+              <form id="form-memb" class=" grid-cols-2 gap-4">
                 <div><h1 class="register">Registro de miembros</h1></div>
                 <div></div>
                 <div>
