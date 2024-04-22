@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\BarcodeController;
+use App\Http\Controllers\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/generate-barcode', [BarcodeController::class, 'generateBarcode'])->name('generateBarcode');
     Route::post('/generate-barcode', [BarcodeController::class, 'generateBarcode'])->name('generateBarcode');
 
-
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->middleware(['verified'])->name('dashboard');
@@ -41,6 +41,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/clientes-registrados', [ClienteController::class, 'index'])->name('pages.clientes');
+    Route::post('/registrar-cliente', [ClienteController::class, 'store'])->name('pages.clientes');
 });
 
 Route::post('/logout', function () {

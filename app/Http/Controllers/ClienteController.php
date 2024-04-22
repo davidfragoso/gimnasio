@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
@@ -14,10 +15,16 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::all();
-
-        return view('clientes.index', compact('clientes'));
+        // $clientes = Cliente::all();
+        // return view('clientes.index', compact('clientes'));
+        return Cliente::get();
     }
+
+    // public function getClients()
+    // {
+    //     $clientes = Cliente::whereIn('id_cliente')->get();
+    //     return response()->json($clientes);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -37,17 +44,13 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required|string',
-            'apellido' => 'required|string',
-            'email' => 'required|email|unique:clientes,email',
-            'estatus' => 'required|boolean',
-        ]);
-
-        Cliente::create($request->all());
-
-        return redirect()->route('clientes.index')
-            ->with('success', 'Cliente creado correctamente.');
+        // $request->validate([
+        //     'nombre' => 'required|string',
+        //     'apellido' => 'required|string',
+        //     'email' => 'required|email|unique:clientes,email',
+        //     'estatus' => 'required|int',
+        // ]);
+        return Cliente::create($request->all());
     }
 
     /**

@@ -9,33 +9,27 @@ const showForm = ref(true);
 </script>
 
 <template>
+
     <Head title="Membresías" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2
-                class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
-            >
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Membresías
-                <button
-                    @click="
-                        showList = !showList;
-                        showForm = !showForm;
-                    "
-                    class="nav-button"
-                >
+                <button @click="
+                    showList = !showList;
+                showForm = !showForm;
+                " class="nav-button">
                     <ul>
                         <li><span>Lista</span></li>
                     </ul>
                 </button>
             </h2>
         </template>
-        <div v-if="showList">
+        <div v-if="showList">   
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div
-                        class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
-                    >
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex justify-center">
                                 <h1 id="titulo">LISTA DE MEMBRESÍAS</h1>
@@ -44,123 +38,80 @@ const showForm = ref(true);
                                 <div>
                                     <table>
                                         <thead>
-                                            <tr
-                                                class="fila"
-                                                style="
+                                            <tr class="fila" style="
                                                     border-bottom: 2px solid
                                                         #fcaf09;
-                                                "
-                                            >
+                                                ">
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >ID</Label
-                                                    >
+                                                    <Label id="label-txt">ID</Label>
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >Nombre</Label
-                                                    >
+                                                    <Label id="label-txt">Nombre</Label>
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >Apellido</Label
-                                                    >
+                                                    <Label id="label-txt">Apellido</Label>
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >Correo</Label
-                                                    >
+                                                    <Label id="label-txt">Correo</Label>
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >Estatus</Label
-                                                    >
+                                                    <Label id="label-txt">Estatus</Label>
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr class="fila">
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >01</Label
-                                                    >
+                                                    <Label id="label-txt">01</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Manolo</Label
-                                                    >
+                                                    <Label id="label-txt">Manolo</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Sanchez</Label
-                                                    >
+                                                    <Label id="label-txt">Sanchez</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >MSanchez@mail.com</Label
-                                                    >
+                                                    <Label id="label-txt">MSanchez@mail.com</Label>
                                                 </td>
                                                 <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Vigente</Label
-                                                    >
+                                                    <Label id="label-txt">Vigente</Label>
                                                 </td>
                                             </tr>
                                             <tr class="fila">
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >01</Label
-                                                    >
+                                                    <Label id="label-txt">01</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Manolo</Label
-                                                    >
+                                                    <Label id="label-txt">Manolo</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Sanchez</Label
-                                                    >
+                                                    <Label id="label-txt">Sanchez</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >MSanchez@mail.com</Label
-                                                    >
+                                                    <Label id="label-txt">MSanchez@mail.com</Label>
                                                 </td>
                                                 <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Vigente</Label
-                                                    >
+                                                    <Label id="label-txt">Vigente</Label>
                                                 </td>
                                             </tr>
                                             <tr class="fila">
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >01</Label
-                                                    >
+                                                    <Label id="label-txt">01</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Manolo</Label
-                                                    >
+                                                    <Label id="label-txt">Manolo</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Sanchez</Label
-                                                    >
+                                                    <Label id="label-txt">Sanchez</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >MSanchez@mail.com</Label
-                                                    >
+                                                    <Label id="label-txt">MSanchez@mail.com</Label>
                                                 </td>
                                                 <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Vigente</Label
-                                                    >
+                                                    <Label id="label-txt">Vigente</Label>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -175,9 +126,7 @@ const showForm = ref(true);
         <div v-if="showForm">
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div
-                        class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
-                    >
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex justify-center" id="">
                                 <div>
@@ -186,21 +135,15 @@ const showForm = ref(true);
                             </div>
                             <form id="form-memb" class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <!-- <h1 class="register">
+                                    <h1 class="form_title">
                                         Datos de la membresia
-                                    </h1> -->
+                                    </h1>
                                 </div>
                                 <div></div>
                                 <div>
-                                    <Label class="label-txt" id="Nombre"
-                                        >Cliente</Label
-                                    ><br />
-                                    <select
-                                        name="clientes"
-                                        class="mt-1 block w-full select-clients"
-                                        id="clientes"
-                                        required
-                                    >
+                                    <Label class="label-txt" id="Nombre">Cliente</Label><br />
+                                    <select name="clientes" class="mt-1 block w-full select-clients" id="clientes"
+                                        required>
                                         <option value="">Nombre 1</option>
                                         <option value="">Nombre 2</option>
                                         <option value="">Nombre 3</option>
@@ -209,15 +152,9 @@ const showForm = ref(true);
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
-                                    <Label class="label-txt" id="Nombre"
-                                        >Mensualidades</Label
-                                    ><br />
-                                    <select
-                                        name="clientes"
-                                        class="mt-1 block w-full select-clients"
-                                        id="clientes"
-                                        required
-                                    >
+                                    <Label class="label-txt" id="Nombre">Mensualidades</Label><br />
+                                    <select name="clientes" class="mt-1 block w-full select-clients" id="clientes"
+                                        required>
                                         <option value="1">1 MES</option>
                                         <option value="2">2 MESES</option>
                                         <option value="3">3 MESES</option>
@@ -227,61 +164,36 @@ const showForm = ref(true);
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
-                                    <Label class="label-txt">Fecha Inicio</Label
-                                    ><br />
-                                    <Input
-                                        id=""
-                                        type="date"
-                                        class="mt-1 block w-full input-form"
-                                        required
-                                    />
+                                    <Label class="label-txt">Fecha Inicio</Label><br />
+                                    <Input id="" type="date" class="mt-1 block w-full input-form" required />
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
-                                    <Label class="label-txt">Fecha Final</Label
-                                    ><br />
-                                    <Input
-                                        id=""
-                                        type="date"
-                                        class="mt-1 block w-full input-form"
-                                    />
+                                    <Label class="label-txt">Fecha Final</Label><br />
+                                    <Input id="" type="date" class="mt-1 block w-full input-form" />
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
-                                    <Label class="label-txt">Importe</Label
-                                    ><br />
+                                    <Label class="label-txt">Importe</Label><br />
                                     <div class="input-group mt-1">
-                                        <input
-                                            id="importe"
-                                            type="text"
-                                            class="form-control input-form"
-                                            required
-                                            style="padding-left: 3rem"
-                                            maxlength="5"
-                                        />
-                                        <span
-                                            class="input-group-text"
-                                            id="validationTooltipUsernamePrepend"
-                                            >$</span
-                                        >
-                                        
+                                        <input id="importe" type="text" class="form-control input-form" required
+                                            autofocus style="padding-left: 3rem" maxlength="5" />
+                                        <span class="input-group-text" id="validationTooltipUsernamePrepend">$</span>
                                     </div>
-                                    <p style="color: #ffb921;margin-top: 1rem;font-style: italic;">
+                                    <p style="
+                                            color: #ffb921;
+                                            margin-top: 1rem;
+                                            font-style: italic;
+                                        ">
                                         Maximo 5 digitos ó $99999.
                                     </p>
                                     <InputError class="mt-2" />
                                 </div>
-
                                 <div>
                                     <BarcodeScanner />
                                 </div>
-                                <div
-                                    class="col-span-2 flex justify-center mt-4"
-                                >
-                                    <Button
-                                        class="ml-4"
-                                        id="btn-menu"
-                                    >
+                                <div class="col-span-2 flex justify-center mt-4">
+                                    <Button class="ml-4" id="btn-menu" @click="togglePopUp()">
                                         Crear
                                     </Button>
                                 </div>
@@ -296,6 +208,7 @@ const showForm = ref(true);
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap");
+
 #titulo {
     font-family: "Quicksand", sans-serif;
     color: whitesmoke;
@@ -305,6 +218,7 @@ const showForm = ref(true);
     margin-top: 1rem;
     text-align: center;
 }
+
 #form-memb {
     height: auto;
     font-family: "Quicksand", sans-serif;
@@ -313,17 +227,19 @@ const showForm = ref(true);
     border-color: #f0a400;
     background-color: #2e353ce3;
     padding: 2.5rem;
-    padding-top: 4rem;
+    padding-top: 2rem;
     --overflow: auto;
     -webkit-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
+
 .label-txt {
     color: #ffb921;
     font-size: 20px;
     --opacity: 0.4;
 }
+
 #btn-menu {
     font-family: "Quicksand", sans-serif;
     text-align: center;
@@ -340,22 +256,26 @@ const showForm = ref(true);
     transition-duration: 0.2s;
     box-shadow: 1px 10px 11px #21212195;
 }
+
 #btn-menu:hover {
     background-color: #fcaf09;
     border-color: #ffffff00;
     color: black;
     background-image: linear-gradient(to right, #fcaf09, #ce8200);
 }
+
 #btn-menu:active {
     background-color: #df9800;
     transform: translateY(4px);
 }
+
 .nav-button {
     font-family: "Quicksand", sans-serif;
     font-weight: 500;
     margin-left: 5%;
     padding: 2px;
 }
+
 .input-group {
     position: relative;
 }
@@ -366,7 +286,8 @@ const showForm = ref(true);
 
 .input-group .input-group-text {
     position: absolute;
-    left: 2px; /* Ajusta la posición del símbolo "$" según sea necesario */
+    left: 2px;
+    /* Ajusta la posición del símbolo "$" según sea necesario */
     top: 50%;
     transform: translateY(-50%);
     background-color: #f0f0f0;
@@ -389,10 +310,12 @@ const showForm = ref(true);
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
+
 .input-form:focus {
     transition: 500ms;
     border-color: #fcaf09;
 }
+
 .select-clients {
     border: 2px solid;
     border-color: #ffffff;
@@ -403,6 +326,7 @@ const showForm = ref(true);
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
+
 /* Estilo personalizado para el cuadro de entrada con el símbolo "$" */
 .input-group {
     position: relative;
@@ -432,6 +356,7 @@ const showForm = ref(true);
     transition: 500ms;
     border-color: #fcaf09;
 }
+
 #logo-container {
     position: absolute;
     background-color: #fcaf09;
@@ -445,22 +370,24 @@ const showForm = ref(true);
     align-items: center;
 }
 
-.register {
+.form_title {
     font-family: "Quicksand", sans-serif;
     color: whitesmoke;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
-    margin-bottom: 1rem;
     text-align: left;
 }
+
 .fila {
     display: flex;
     justify-content: space-between;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
 }
+
 th,
 td {
     width: 200px;
@@ -470,6 +397,7 @@ td {
     --overflow-x: scroll;
     overflow-x: auto;
 }
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -491,6 +419,7 @@ td {
 ::-webkit-scrollbar-thumb:hover {
     background: #cb8f0e;
 }
+
 ul {
     padding: 0;
     list-style-type: none;

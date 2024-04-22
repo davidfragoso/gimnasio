@@ -1,17 +1,50 @@
-<script setup>
+<script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import { ref } from "vue";
-import Checkbox from '@/Components/Checkbox.vue';
-import PopUp from '.';
+import { ref, onMounted } from "vue";
+import axios from "axios";
 
 const showList = ref(false);
 const showForm = ref(true);
+const clientes = ref([]);
+
+const nombre = ref("");
+const apellido = ref("");
+const correo = ref("");
+
+const submit = async () => {
+    const user = {
+        nombre: nombre.value,
+        apellido: apellido.value,
+        email: correo.value,
+        estatus: 1,
+    };
+    try {
+        const clientesResponse = await axios
+            .post("/registrar-cliente", user)
+            .then(function (response) {
+                console.log(response);
+            });
+    } catch (error) {
+        console.error("Error al registrar el cliente nuevo:", error);
+    }
+};
+
+async function fetchClientes() {
+    try {
+        const clientesResponse = await axios.get("/clientes-registrados");
+        clientes.value = clientesResponse.data;
+        console.log(clientes);
+    } catch (error) {
+        console.error("Error al obtener los clientes:", error);
+    }
+}
+
+onMounted(fetchClientes);
 </script>
 
 <template>
     <Head title="Clientes" />
-
     <AuthenticatedLayout>
         <template #header>
             <h2
@@ -25,9 +58,9 @@ const showForm = ref(true);
                     "
                     class="nav-button"
                 >
-                <ul>
-  <li><span>Lista</span></li>
-</ul>
+                    <ul>
+                        <li><span>Lista</span></li>
+                    </ul>
                 </button>
             </h2>
         </template>
@@ -41,66 +74,81 @@ const showForm = ref(true);
                             <div class="flex justify-center">
                                 <h1 id="titulo">LISTA DE CLIENTES</h1>
                             </div>
-                            <div id="form-clients">
+                            <div class="form-clients">
                                 <div>
                                     <table>
                                         <thead>
-                                            <tr class="fila" style="border-bottom: 2px solid #fcaf09;">
+                                            <tr
+                                                class="fila"
+                                                style="
+                                                    border-bottom: 2px solid
+                                                        #fcaf09;
+                                                "
+                                            >
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >ID</Label
+                                                    <label id="label-txt"
+                                                        >ID</label
                                                     >
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >Nombre</Label
+                                                    <label id="label-txt"
+                                                        >Nombre</label
                                                     >
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >Apellido</Label
+                                                    <label id="label-txt"
+                                                        >Apellido</label
                                                     >
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >Correo</Label
+                                                    <label id="label-txt"
+                                                        >Correo</label
                                                     >
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt"
-                                                        >Estatus</Label
+                                                    <label id="label-txt"
+                                                        >Estatus</label
                                                     >
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="fila">
+                                            <tr
+                                                class="fila"
+                                                v-for="cliente in clientes"
+                                                :key="cliente.id"
+                                            >
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >01</Label
-                                                    >
+                                                    <label id="label-txt">{{
+                                                        cliente.id_cliente
+                                                    }}</label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Manolo</Label
-                                                    >
+                                                    <label id="label-txt">{{
+                                                        cliente.nombre
+                                                    }}</label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Sanchez</Label
-                                                    >
+                                                    <label id="label-txt">{{
+                                                        cliente.apellido
+                                                    }}</label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >MSanchez@mail.com</Label
-                                                    >
+                                                    <label id="label-txt">{{
+                                                        cliente.email
+                                                    }}</label>
                                                 </td>
                                                 <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
                                                 <td>
-                                                    <Label id="label-txt"
-                                                        >Vigente</Label
+                                                    <label
+                                                        id="label-txt"
+                                                        v-if="cliente.estatus"
+                                                        >Activa</label
                                                     >
-                                                </td>                                               
+                                                    <label id="label-txt" v-else
+                                                        >Cancelada</label
+                                                    >
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -121,55 +169,54 @@ const showForm = ref(true);
                             <div class="flex justify-center" id="t-container">
                                 <h1 id="titulo">REGISTRO DE CLIENTES</h1>
                             </div>
-                            <form id="form-clients">
-                        
+                            <form
+                                class="form-clients"
+                                id="registro-clients"
+                                @submit.prevent="submit"
+                            >
                                 <div>
-                                    <Label class="label-txt">Nombre</Label><br />
-                                    <Input
-                                        id="email"
+                                    <label class="label-txt">Nombre</label
+                                    ><br />
+                                    <input
+                                        v-model="nombre"
+                                        name="nombre"
                                         type="text"
-                                        class="mt-1 block w-full"
+                                        class="mt-1 block w-full input-form"
                                         required
                                         autofocus
-                                        autocomplete="username"
                                     />
-                                    <InputError class="mt-2" />
                                 </div>
                                 <br />
                                 <div class="mt-4">
-                                    <Label class="label-txt">Apellido</Label><br />
-                                    <Input
-                                        id="password"
+                                    <label class="label-txt">Apellido</label
+                                    ><br />
+                                    <input
+                                        v-model="apellido"
+                                        name="apellido"
                                         type="text"
-                                        class="mt-1 block w-full"
+                                        class="mt-1 block w-full input-form"
                                         required
-                                        autocomplete="current-password"
                                     />
-                                    <InputError class="mt-2" />
                                 </div>
                                 <br />
                                 <div class="mt-4">
-                                    <Label class="label-txt">Correo</Label><br />
-                                    <Input
-                                        id="password"
+                                    <label class="label-txt">Correo</label
+                                    ><br />
+                                    <input
+                                        v-model="correo"
+                                        name="email"
                                         type="email"
-                                        class="mt-1 block w-full"
+                                        class="mt-1 block w-full input-form"
                                         required
-                                        autocomplete="current-password"
                                     />
-                                    <InputError class="mt-2" />
                                 </div>
                                 <br />
-                                <div class="block mt-4">
-                                    <label class="flex items-center"> </label>
-                                </div>
-                                <br /><br />
                                 <div
                                     class="flex items-center justify-center mt-4"
                                 >
-                                    <PrimaryButton class="ml-4" id="btn-menu">
+                                    <button class="ml-0" id="btn-menu">
                                         Registrar cliente
-                                    </PrimaryButton>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -182,17 +229,22 @@ const showForm = ref(true);
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap");
+
 #titulo {
     font-family: "Quicksand", sans-serif;
     color: whitesmoke;
     font-size: 38px;
     font-weight: bold;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     margin-top: 1rem;
 }
-#form-clients {
+
+#registro-clients {
     margin-left: 30%;
     margin-right: 30%;
+}
+
+.form-clients {
     height: auto;
     font-family: "Quicksand", sans-serif;
     border-radius: 15px;
@@ -206,6 +258,7 @@ const showForm = ref(true);
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
+
 .label-txt {
     color: #ffb921;
     font-size: 20px;
@@ -232,32 +285,43 @@ const showForm = ref(true);
     transition-duration: 0.2s;
     box-shadow: 1px 10px 11px #21212195;
 }
+
 #btn-menu:hover {
     background-color: #fcaf09;
     border-color: #ffffff00;
     color: black;
     background-image: linear-gradient(to right, #fcaf09, #ce8200);
 }
+
 #btn-menu:active {
     background-color: #df9800;
     transform: translateY(4px);
 }
+
 .nav-button {
     font-family: "Quicksand", sans-serif;
-font-weight: 500;
-margin-left:5%;
-padding: 2px;
+    font-weight: 500;
+    margin-left: 5%;
+    padding: 2px;
 }
-#email,
-#password {
-    border: 2px solid;
+
+.input-form {
+    height: 3rem;
+    border: 3px solid;
     border-color: #ffffff;
+    background-color: whitesmoke;
     font-size: larger;
     color: black;
     -webkit-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
+
+.input-form:focus {
+    transition: 500ms;
+    border-color: #fcaf09;
+}
+
 #logo-container {
     position: absolute;
     background-color: #fcaf09;
@@ -270,11 +334,13 @@ padding: 2px;
     justify-content: center;
     align-items: center;
 }
+
 .list-headers {
     display: flex;
     justify-content: space-between;
     border-bottom: 2px solid #fcaf09;
 }
+
 .list-content {
     margin-top: 1rem;
     --border: 2px solid;
@@ -289,38 +355,38 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
-th, td {
+
+th,
+td {
     width: 200px;
     padding: 8px;
     --word-wrap: break-word;
     text-align: center;
     --overflow-x: scroll;
-    overflow-x:auto;
+    overflow-x: auto;
 }
-
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 50px grey; 
-  border-radius: 10px;
+    box-shadow: inset 0 0 50px grey;
+    border-radius: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #fcaf09; 
-  border-radius: 10px;
+    background: #fcaf09;
+    border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #cb8f0e; 
+    background: #cb8f0e;
 }
-
 
 ul {
     padding: 0;
@@ -328,8 +394,8 @@ ul {
 }
 
 li {
-font-weight: 200;
-font-size: 15px;
+    font-weight: 200;
+    font-size: 15px;
     width: 8em;
     height: 2em;
     color: orange;
@@ -340,9 +406,8 @@ font-size: 15px;
 }
 
 li::before,
-li::after
- {
-    content: '';
+li::after {
+    content: "";
     position: absolute;
     width: inherit;
     border-left: inherit;
@@ -382,6 +447,4 @@ li span {
 li:hover span {
     transform: translateX(0.15em);
 }
-
-
 </style>
