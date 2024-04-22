@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
@@ -44,7 +44,13 @@ const showForm = ref(true);
                                 <div>
                                     <table>
                                         <thead>
-                                            <tr class="fila" style="border-bottom: 2px solid #fcaf09;">
+                                            <tr
+                                                class="fila"
+                                                style="
+                                                    border-bottom: 2px solid
+                                                        #fcaf09;
+                                                "
+                                            >
                                                 <th>
                                                     <Label id="label-txt"
                                                         >ID</Label
@@ -99,34 +105,6 @@ const showForm = ref(true);
                                                     <Label id="label-txt"
                                                         >Vigente</Label
                                                     >
-                                                </td>                                               
-                                            </tr>
-                                            <tr class="fila">
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >01</Label
-                                                    >
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >Manolo</Label
-                                                    >
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >Sanchez</Label
-                                                    >
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >MSanchez@mail.com</Label
-                                                    >
-                                                </td>
-                                                <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >Vigente</Label
-                                                    >
                                                 </td>
                                             </tr>
                                             <tr class="fila">
@@ -155,7 +133,35 @@ const showForm = ref(true);
                                                     <Label id="label-txt"
                                                         >Vigente</Label
                                                     >
-                                                </td>                                               
+                                                </td>
+                                            </tr>
+                                            <tr class="fila">
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >01</Label
+                                                    >
+                                                </td>
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >Manolo</Label
+                                                    >
+                                                </td>
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >Sanchez</Label
+                                                    >
+                                                </td>
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >MSanchez@mail.com</Label
+                                                    >
+                                                </td>
+                                                <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >Vigente</Label
+                                                    >
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -224,11 +230,10 @@ const showForm = ref(true);
                                     <Label class="label-txt">Fecha Inicio</Label
                                     ><br />
                                     <Input
-                                        id="input-form"
+                                        id=""
                                         type="date"
-                                        class="mt-1 block w-full"
+                                        class="mt-1 block w-full input-form"
                                         required
-                                        autocomplete="current-password"
                                     />
                                     <InputError class="mt-2" />
                                 </div>
@@ -236,26 +241,37 @@ const showForm = ref(true);
                                     <Label class="label-txt">Fecha Final</Label
                                     ><br />
                                     <Input
-                                        id="input-form"
+                                        id=""
                                         type="date"
-                                        class="mt-1 block w-full"
-                                        autocomplete="current-password"
-
+                                        class="mt-1 block w-full input-form"
                                     />
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
                                     <Label class="label-txt">Importe</Label
                                     ><br />
-                                    <Input
-                                        id="input-form"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        required
-                                        autocomplete="current-password"
-                                    />
+                                    <div class="input-group mt-1">
+                                        <input
+                                            id="importe"
+                                            type="text"
+                                            class="form-control input-form"
+                                            required
+                                            style="padding-left: 3rem"
+                                            maxlength="5"
+                                        />
+                                        <span
+                                            class="input-group-text"
+                                            id="validationTooltipUsernamePrepend"
+                                            >$</span
+                                        >
+                                        
+                                    </div>
+                                    <p style="color: #ffb921;margin-top: 1rem;font-style: italic;">
+                                        Maximo 5 digitos ó $99999.
+                                    </p>
                                     <InputError class="mt-2" />
                                 </div>
+
                                 <div>
                                     <BarcodeScanner />
                                 </div>
@@ -266,7 +282,6 @@ const showForm = ref(true);
                                         class="ml-4"
                                         id="btn-menu"
                                         @click="togglePopUp()"
-                                        
                                     >
                                         Crear
                                     </Button>
@@ -342,8 +357,29 @@ const showForm = ref(true);
     margin-left: 5%;
     padding: 2px;
 }
+.input-group {
+    position: relative;
+}
 
-#input-form {
+.input-group .form-control {
+    padding-left: 30px;
+}
+
+.input-group .input-group-text {
+    position: absolute;
+    left: 2px; /* Ajusta la posición del símbolo "$" según sea necesario */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f0f0f0;
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    color: #495057;
+    line-height: 1.5;
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.input-form {
     height: 3rem;
     border: 3px solid;
     border-color: #ffffff;
@@ -354,7 +390,7 @@ const showForm = ref(true);
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
-#input-form:focus {
+.input-form:focus {
     transition: 500ms;
     border-color: #fcaf09;
 }
@@ -368,6 +404,31 @@ const showForm = ref(true);
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
+/* Estilo personalizado para el cuadro de entrada con el símbolo "$" */
+.input-group {
+    position: relative;
+}
+
+.input-group-text {
+    background-color: #f0f0f0;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem 0 0 0.25rem;
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 0.25rem;
+}
+
+.form-control {
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
 .select-clients:focus {
     transition: 500ms;
     border-color: #fcaf09;
@@ -401,34 +462,35 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
-th, td {
+th,
+td {
     width: 200px;
     padding: 8px;
     --word-wrap: break-word;
     text-align: center;
     --overflow-x: scroll;
-    overflow-x:auto;
+    overflow-x: auto;
 }
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 50px grey; 
-  border-radius: 10px;
+    box-shadow: inset 0 0 50px grey;
+    border-radius: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #fcaf09; 
-  border-radius: 10px;
+    background: #fcaf09;
+    border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #cb8f0e; 
+    background: #cb8f0e;
 }
 ul {
     padding: 0;
