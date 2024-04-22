@@ -44,7 +44,13 @@ const showForm = ref(true);
                                 <div>
                                     <table>
                                         <thead>
-                                            <tr class="fila" style="border-bottom: 2px solid #fcaf09;">
+                                            <tr
+                                                class="fila"
+                                                style="
+                                                    border-bottom: 2px solid
+                                                        #fcaf09;
+                                                "
+                                            >
                                                 <th>
                                                     <Label id="label-txt"
                                                         >ID</Label
@@ -99,34 +105,6 @@ const showForm = ref(true);
                                                     <Label id="label-txt"
                                                         >Vigente</Label
                                                     >
-                                                </td>                                               
-                                            </tr>
-                                            <tr class="fila">
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >01</Label
-                                                    >
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >Manolo</Label
-                                                    >
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >Sanchez</Label
-                                                    >
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >MSanchez@mail.com</Label
-                                                    >
-                                                </td>
-                                                <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
-                                                <td>
-                                                    <Label id="label-txt"
-                                                        >Vigente</Label
-                                                    >
                                                 </td>
                                             </tr>
                                             <tr class="fila">
@@ -155,7 +133,35 @@ const showForm = ref(true);
                                                     <Label id="label-txt"
                                                         >Vigente</Label
                                                     >
-                                                </td>                                               
+                                                </td>
+                                            </tr>
+                                            <tr class="fila">
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >01</Label
+                                                    >
+                                                </td>
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >Manolo</Label
+                                                    >
+                                                </td>
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >Sanchez</Label
+                                                    >
+                                                </td>
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >MSanchez@mail.com</Label
+                                                    >
+                                                </td>
+                                                <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >Vigente</Label
+                                                    >
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -244,18 +250,22 @@ const showForm = ref(true);
                                     />
                                     <InputError class="mt-2" />
                                 </div>
-                                <div>
-                                    <Label class="label-txt">Importe</Label
-                                    ><br />
-                                    <Input
-                                        id="input-form"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        required
-                                        autocomplete="current-password"
-                                    />
+                                <div class="importe_input">
+                                    <Label class="label-txt" id="in_importe">Importe</Label><br />
+                                    <div class="input-group mt-1">
+                                        <Input
+                                            id="input-form"
+                                            type="number"
+                                            class="form-control"
+                                            required
+                                            autocomplete="current-password"
+                                        />
+                                        <span class="input-group-text">$</span>
+                                    </div>
                                     <InputError class="mt-2" />
                                 </div>
+                                
+
                                 <div>
                                     <BarcodeScanner />
                                 </div>
@@ -291,6 +301,8 @@ const showForm = ref(true);
     margin-top: 1rem;
     text-align: center;
 }
+
+Input 
 #form-memb {
     height: auto;
     font-family: "Quicksand", sans-serif;
@@ -343,20 +355,31 @@ const showForm = ref(true);
     padding: 2px;
 }
 
-#input-form {
-    height: 3rem;
-    border: 3px solid;
-    border-color: #ffffff;
-    background-color: whitesmoke;
-    font-size: larger;
-    color: black;
-    -webkit-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
-    box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+.input-group {
+    position: relative;
 }
-#input-form:focus {
-    transition: 500ms;
-    border-color: #fcaf09;
+
+.input-group .form-control {
+    padding-left: 30px; /* Espacio para el símbolo "$" */
+}
+
+.importe_input Input {
+    text-align: end;
+    color: #495057;
+
+}
+.input-group .input-group-text {
+    position: absolute;
+    left: 2px; /* Ajusta la posición del símbolo "$" según sea necesario */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f0f0f0;
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    color: #495057;
+    line-height: 1.5;
+    border-radius: 0.25rem 0 0 0.25rem;
 }
 .select-clients {
     border: 2px solid;
@@ -368,6 +391,12 @@ const showForm = ref(true);
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
+
+
+.form-control {
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
 .select-clients:focus {
     transition: 500ms;
     border-color: #fcaf09;
@@ -383,6 +412,22 @@ const showForm = ref(true);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#input-form {
+    height: 3rem;
+    border: 3px solid;
+    border-color: #ffffff;
+    background-color: whitesmoke;
+    font-size: larger;
+    color: #495057;
+    -webkit-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+    box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+}
+#input-form:focus {
+    transition: 500ms;
+    border-color: #fcaf09;
 }
 
 .register {
@@ -401,34 +446,35 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
-th, td {
+th,
+td {
     width: 200px;
     padding: 8px;
     --word-wrap: break-word;
     text-align: center;
     --overflow-x: scroll;
-    overflow-x:auto;
+    overflow-x: auto;
 }
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 50px grey; 
-  border-radius: 10px;
+    box-shadow: inset 0 0 50px grey;
+    border-radius: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #fcaf09; 
-  border-radius: 10px;
+    background: #fcaf09;
+    border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #cb8f0e; 
+    background: #cb8f0e;
 }
 ul {
     padding: 0;
