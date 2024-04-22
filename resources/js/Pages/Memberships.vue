@@ -250,8 +250,8 @@ const showForm = ref(true);
                                     />
                                     <InputError class="mt-2" />
                                 </div>
-                                <div class="importe_input">
-                                    <Label class="label-txt" id="in_importe">Importe</Label><br />
+                                <div>
+                                    <Label class="label-txt">Importe</Label><br />
                                     <div class="input-group mt-1">
                                         <Input
                                             id="input-form"
@@ -260,10 +260,11 @@ const showForm = ref(true);
                                             required
                                             autocomplete="current-password"
                                         />
-                                        <span class="input-group-text">$</span>
+                                        <span class="input-group-text" id="validationTooltipUsernamePrepend">$</span>
                                     </div>
                                     <InputError class="mt-2" />
                                 </div>
+                                
                                 
 
                                 <div>
@@ -301,8 +302,6 @@ const showForm = ref(true);
     margin-top: 1rem;
     text-align: center;
 }
-
-Input 
 #form-memb {
     height: auto;
     font-family: "Quicksand", sans-serif;
@@ -354,20 +353,15 @@ Input
     margin-left: 5%;
     padding: 2px;
 }
-
 .input-group {
     position: relative;
 }
 
 .input-group .form-control {
-    padding-left: 30px; /* Espacio para el símbolo "$" */
+    padding-left: 30px; 
 }
 
-.importe_input Input {
-    text-align: end;
-    color: #495057;
 
-}
 .input-group .input-group-text {
     position: absolute;
     left: 2px; /* Ajusta la posición del símbolo "$" según sea necesario */
@@ -381,6 +375,22 @@ Input
     line-height: 1.5;
     border-radius: 0.25rem 0 0 0.25rem;
 }
+
+#input-form {
+    height: 3rem;
+    border: 3px solid;
+    border-color: #ffffff;
+    background-color: whitesmoke;
+    font-size: larger;
+    color: black;
+    -webkit-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+    box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+}
+#input-form:focus {
+    transition: 500ms;
+    border-color: #fcaf09;
+}
 .select-clients {
     border: 2px solid;
     border-color: #ffffff;
@@ -391,7 +401,26 @@ Input
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
+/* Estilo personalizado para el cuadro de entrada con el símbolo "$" */
+.input-group {
+    position: relative;
+}
 
+.input-group-text {
+    background-color: #f0f0f0;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem 0 0 0.25rem;
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 0.25rem;
+}
 
 .form-control {
     border-radius: 0 0.25rem 0.25rem 0;
@@ -412,22 +441,6 @@ Input
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-#input-form {
-    height: 3rem;
-    border: 3px solid;
-    border-color: #ffffff;
-    background-color: whitesmoke;
-    font-size: larger;
-    color: #495057;
-    -webkit-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
-    box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
-}
-#input-form:focus {
-    transition: 500ms;
-    border-color: #fcaf09;
 }
 
 .register {
