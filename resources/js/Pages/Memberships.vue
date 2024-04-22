@@ -21,7 +21,10 @@ const showForm = ref(true);
           "
           class="nav-button"
         >
-          Lista de membresías
+        <ul>
+  <li><span>Lista</span></li>
+</ul>
+
         </button>
       </h2>
     </template>
@@ -55,7 +58,7 @@ const showForm = ref(true);
               <div class="flex justify-center" id="t-container">
                 <div><h1 id="titulo">REGISTRO DE MEMBRESÍAS</h1></div>
               </div>
-              <form id="form-memb" class=" grid-cols-2 gap-4">
+              <form id="form-memb" class="grid grid-cols-2 gap-4">
                 <div><h1 class="register">Registro de miembros</h1></div>
                 <div></div>
                 <div>
@@ -115,8 +118,9 @@ const showForm = ref(true);
                   <InputError class="mt-2" />
                 </div>
                 <div class="col-span-2 flex justify-center mt-4">
-                  <PrimaryButton class="ml-4" id="btn-menu"> Crear </PrimaryButton>
+                  <PrimaryButton class="ml-4" id="btn-menu" @click="togglePopUp()"> Crear </PrimaryButton>
                 </div>
+                
               </form>
             </div>
           </div>
@@ -147,10 +151,16 @@ const showForm = ref(true);
   padding: 2.5rem;
   padding-top: 4rem;
   --overflow: auto;
+  -webkit-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
+-moz-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
+box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
+
 }
 #label-txt {
   font-size: 28px;
   color: whitesmoke;
+  font-size: 18px;
+  opacity: .4;
 }
 #forgot-psw-txt {
   color: #fcaf09;
@@ -201,13 +211,12 @@ const showForm = ref(true);
   transform: translateY(4px);
 }
 .nav-button {
-  border: 1px solid;
-  font-family: "Quicksand", sans-serif;
-  font-weight: 500;
+font-family: "Quicksand", sans-serif;
+font-weight: 500;
 margin-left:5%;
 padding: 2px;
-
 }
+
 #email,
 #password {
   height: 2rem;
@@ -216,6 +225,9 @@ padding: 2px;
   background-color: whitesmoke;
   font-size: larger;
   color: black;
+  -webkit-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
+-moz-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
+box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
 }
 #logo-container {
   position: absolute;
@@ -240,11 +252,67 @@ padding: 2px;
   text-align: left;
 }
 
-.nav-button:hover{
-font-family: "Quicksand", sans-serif;
-background-color: #fcaf09;
-  border-color: #ffffff00;
-  color: black;
-  background-image: linear-gradient(to right, #fcaf09, #ce8200);
+ul {
+    padding: 0;
+    list-style-type: none;
 }
+
+li {
+font-weight: 200;
+font-size: 15px;
+    width: 8em;
+    height: 2em;
+    color: orange;
+    border-left: 0.08em solid;
+    position: relative;
+    margin-top: 0.8em;
+    cursor: pointer;
+}
+
+li::before,
+li::after
+ {
+    content: '';
+    position: absolute;
+    width: inherit;
+    border-left: inherit;
+    z-index: -1;
+}
+
+li::before {
+    height: 80%;
+    top: 10%;
+    left: calc(-0.15em - 0.08em * 2);
+    filter: brightness(0.8);
+}
+
+li::after {
+    height: 60%;
+    top: 20%;
+    left: calc(-0.15em * 2 - 0.08em * 3);
+    filter: brightness(0.6);
+}
+
+li span {
+    position: relative;
+    height: 120%;
+    top: -10%;
+    box-sizing: border-box;
+    border: 0.08em solid;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+    text-transform: capitalize;
+    transform: translateX(calc(-0.15em * 3 - 0.08em * 2));
+    transition: 0.3s;
+}
+
+li:hover span {
+    transform: translateX(0.15em);
+}
+
+
+
 </style>
