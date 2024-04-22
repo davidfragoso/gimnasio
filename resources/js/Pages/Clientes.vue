@@ -40,16 +40,16 @@ const showForm = ref(true);
                                 <h1 id="titulo">LISTA DE CLIENTES</h1>
                             </div>
                             <form id="form-clients">
-                                <div class="list-headers">
+                                <div class="fila" style="border-bottom: 2px solid #fcaf09">
                                     <Label id="label-txt">ID</Label>
                                     <Label id="label-txt">Nombre</Label>
                                     <Label id="label-txt">Apellido</Label>
                                     <Label id="label-txt">Correo</Label>
                                     <Label id="label-txt">Estatus</Label>
                                 </div>
-                                <div class="list-content">
-                                    <table style="width: 100%;">
-                                        <tr style="display: flex;justify-content: space-between;">
+                                <div class="fila">
+                                    <table  style="width: 100%;">
+                                        <tr  style="display: flex;justify-content: space-between;">
                                             <td><Label id="label-txt">01</Label></td>
                                             <td><Label id="label-txt">Manolo</Label></td>
                                             <td><Label id="label-txt">Sanchez</Label></td>
@@ -78,7 +78,7 @@ const showForm = ref(true);
                             <form id="form-clients">
                         
                                 <div>
-                                    <Label id="label-txt">Nombre</Label><br />
+                                    <Label class="label-txt">Nombre</Label><br />
                                     <Input
                                         id="email"
                                         type="text"
@@ -91,7 +91,7 @@ const showForm = ref(true);
                                 </div>
                                 <br />
                                 <div class="mt-4">
-                                    <Label id="label-txt">Apellido</Label><br />
+                                    <Label class="label-txt">Apellido</Label><br />
                                     <Input
                                         id="password"
                                         type="text"
@@ -103,7 +103,7 @@ const showForm = ref(true);
                                 </div>
                                 <br />
                                 <div class="mt-4">
-                                    <Label id="label-txt">Correo</Label><br />
+                                    <Label class="label-txt">Correo</Label><br />
                                     <Input
                                         id="password"
                                         type="email"
@@ -145,49 +145,29 @@ const showForm = ref(true);
     margin-top: 1rem;
 }
 #form-clients {
-margin-left: 15%;
-margin-right: 15%;
     height: auto;
     font-family: "Quicksand", sans-serif;
     border-radius: 15px;
     border: 2px solid;
-    border-color: #df9800;
-    background-color: #556b7de3;
+    border-color: #f0a400;
+    background-color: #2e353ce3;
     padding: 2.5rem;
     padding-top: 4rem;
     --overflow: auto;
-    -webkit-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
--moz-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+    box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
-#label-txt {
-    font-size: 28px;
-  color: whitesmoke;
-  font-size: 18px;
-  opacity: .4;
+.label-txt {
+    color: #ffb921;
+    font-size: 20px;
+    --opacity: 0.4;
 }
+
 #forgot-psw-txt {
     color: #fcaf09;
 }
-#check-txt {
-    color: whitesmoke;
-    font-size: large;
-}
-#checkbox {
-    width: 24px;
-    height: 24px;
-}
-#checkbox:hover {
-    outline-style: solid;
-    outline-color: #fcaf09;
-    cursor: pointer;
-}
-#checkbox:active,
-#checkbox:focus {
-    outline-style: solid;
-    outline-color: #fcaf09;
-    background-color: #fcaf09;
-}
+
 #btn-menu {
     font-family: "Quicksand", sans-serif;
     text-align: center;
@@ -222,16 +202,13 @@ padding: 2px;
 }
 #email,
 #password {
-    height: 2rem;
-  border: 2px solid;
-  border-color: #ffffff;
-  background-color: whitesmoke;
-  font-size: larger;
-  color: black;
-  -webkit-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
--moz-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
-box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
-
+    border: 2px solid;
+    border-color: #ffffff;
+    font-size: larger;
+    color: black;
+    -webkit-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
+    box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
 #logo-container {
     position: absolute;
@@ -254,6 +231,48 @@ box-shadow: 9px 10px 19px -7px rgba(0,0,0,0.75);
     margin-top: 1rem;
     --border: 2px solid;
 }
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    width: 200px;
+    padding: 8px;
+    --word-wrap: break-word;
+    text-align: center;
+    --overflow-x: scroll;
+    overflow-x:auto;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 50px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #fcaf09; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #cb8f0e; 
+}
+
 
 ul {
     padding: 0;
