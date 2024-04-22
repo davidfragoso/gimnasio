@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
@@ -230,11 +230,10 @@ const showForm = ref(true);
                                     <Label class="label-txt">Fecha Inicio</Label
                                     ><br />
                                     <Input
-                                        id="input-form"
+                                        id=""
                                         type="date"
-                                        class="mt-1 block w-full"
+                                        class="mt-1 block w-full input-form"
                                         required
-                                        autocomplete="current-password"
                                     />
                                     <InputError class="mt-2" />
                                 </div>
@@ -242,30 +241,36 @@ const showForm = ref(true);
                                     <Label class="label-txt">Fecha Final</Label
                                     ><br />
                                     <Input
-                                        id="input-form"
+                                        id=""
                                         type="date"
-                                        class="mt-1 block w-full"
-                                        autocomplete="current-password"
-
+                                        class="mt-1 block w-full input-form"
                                     />
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
-                                    <Label class="label-txt">Importe</Label><br />
+                                    <Label class="label-txt">Importe</Label
+                                    ><br />
                                     <div class="input-group mt-1">
-                                        <Input
-                                            id="input-form"
-                                            type="number"
-                                            class="form-control"
+                                        <input
+                                            id="importe"
+                                            type="text"
+                                            class="form-control input-form"
                                             required
-                                            autocomplete="current-password"
+                                            style="padding-left: 3rem"
+                                            maxlength="5"
                                         />
-                                        <span class="input-group-text" id="validationTooltipUsernamePrepend">$</span>
+                                        <span
+                                            class="input-group-text"
+                                            id="validationTooltipUsernamePrepend"
+                                            >$</span
+                                        >
+                                        
                                     </div>
+                                    <p style="color: #ffb921;margin-top: 1rem;font-style: italic;">
+                                        Maximo 5 digitos ó $99999.
+                                    </p>
                                     <InputError class="mt-2" />
                                 </div>
-                                
-                                
 
                                 <div>
                                     <BarcodeScanner />
@@ -277,7 +282,6 @@ const showForm = ref(true);
                                         class="ml-4"
                                         id="btn-menu"
                                         @click="togglePopUp()"
-                                        
                                     >
                                         Crear
                                     </Button>
@@ -358,9 +362,8 @@ const showForm = ref(true);
 }
 
 .input-group .form-control {
-    padding-left: 30px; 
+    padding-left: 30px;
 }
-
 
 .input-group .input-group-text {
     position: absolute;
@@ -376,7 +379,7 @@ const showForm = ref(true);
     border-radius: 0.25rem 0 0 0.25rem;
 }
 
-#input-form {
+.input-form {
     height: 3rem;
     border: 3px solid;
     border-color: #ffffff;
@@ -387,7 +390,7 @@ const showForm = ref(true);
     -moz-box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
     box-shadow: 9px 10px 19px -7px rgba(0, 0, 0, 0.75);
 }
-#input-form:focus {
+.input-form:focus {
     transition: 500ms;
     border-color: #fcaf09;
 }
