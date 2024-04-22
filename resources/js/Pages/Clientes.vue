@@ -2,6 +2,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
+import Checkbox from '@/Components/Checkbox.vue';
+import PopUp from '.';
 
 const showList = ref(false);
 const showForm = ref(true);
@@ -189,6 +191,8 @@ const showForm = ref(true);
     margin-top: 1rem;
 }
 #form-clients {
+    margin-left: 30%;
+    margin-right: 30%;
     height: auto;
     font-family: "Quicksand", sans-serif;
     border-radius: 15px;
