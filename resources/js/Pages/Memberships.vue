@@ -281,7 +281,6 @@ const showForm = ref(true);
                                     <Button
                                         class="ml-4"
                                         id="btn-menu"
-                                        @click="togglePopUp()"
                                     >
                                         Crear
                                     </Button>
