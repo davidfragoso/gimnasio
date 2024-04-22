@@ -1,46 +1,60 @@
 <script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import { Link } from '@inertiajs/vue3';
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-800">
-        <div>
-            <!-- <Link href="/">
-                <ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
-            </Link> -->
-        </div>
-        <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg"
-        >
-            <slot />
+    <div class="max-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-800 col-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full h-full">
+            <!-- Primera columna -->
+            <div class="col-span-1 sm:max-w-md px-6 py-4 bg-white dark:bg-gray-800 overflow-hidden sm:rounded-lg sm:justify-self-center h-full">
+                <slot />
+            </div>
+            <div class="col-span-1 sm:max-w-md px-6 py-4 bg-white dark:bg-gray-800 overflow-hidden sm:rounded-lg h-full">
+                <!-- Columna del logo -->
+                <div class="w-full h-full flex justify-center items-center container-wrap">
+                    <div id="logo-container">
+                        <ApplicationLogo></ApplicationLogo>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
+
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap");
+.max-h-screen {
+    height: 100vh;
+}
 #titulo {
     font-family: "Quicksand", sans-serif;
     color: whitesmoke;
-    font-size: 38px;
+    font-size: 32px;
     font-weight: bold;
-    margin-bottom: 5rem;
-    margin-top: -1rem;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+
 }
 #form-log {
-    font-family: "Quicksand", sans-serif;    
+    font-family: "Quicksand", sans-serif;
     border-radius: 15px;
     border: 2px solid;
     border-color: #df9800;
-    height: 35rem;
+    height: 30rem;
     background-color: #556b7de3;
     padding: 2.5rem;
-    padding-top: 4rem; 
+    max-width: 100%;
+    font-size: 20px; 
+    padding: 3rem;
+    margin: auto;
 }
+
 #label-txt {
-    font-size: 28px;
+    font-size: 24px;
     color: whitesmoke;
+    
 }
 #forgot-psw-txt {
     color: #fcaf09;
@@ -53,13 +67,13 @@ import { Link } from '@inertiajs/vue3';
     width: 24px;
     height: 24px;
 }
-#checkbox:hover{
+#checkbox:hover {
     outline-style: solid;
     outline-color: #fcaf09;
     cursor: pointer;
 }
 #checkbox:active,
-#checkbox:focus{
+#checkbox:focus {
     outline-style: solid;
     outline-color: #fcaf09;
     background-color: #fcaf09;
@@ -99,15 +113,24 @@ import { Link } from '@inertiajs/vue3';
     color: black;
 }
 #logo-container {
-    position: absolute;
     background-color: #fcaf09;
-    rotate: -90deg;
-    width: 50vw;
-    margin-top: -38rem;
-    --height: 50vh;
-    margin-left: 26rem;
+    transform: rotate(-90deg);
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.container-wrap {
+    height: 100%;
+}
+
+@media (min-width: 640px) {
+    .grid-cols-1 {
+        grid-template-columns: 2fr 1fr;
+    }
+    .grid-cols-1 > :nth-child(2) {
+        justify-self: end;
+        background-color: #fcaf09;
+    }
+}
+
 </style>
