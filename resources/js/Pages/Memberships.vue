@@ -118,7 +118,7 @@ const showForm = ref(true);
                   <InputError class="mt-2" />
                 </div>
                 <div class="col-span-2 flex justify-center mt-4">
-                  <PrimaryButton class="ml-4" id="btn-menu" @click="togglePopUp()"> Crear </PrimaryButton>
+                  <PrimaryButton class="ml-4" id="btn-menu"> Crear </PrimaryButton>
                 </div>
                 
               </form>
