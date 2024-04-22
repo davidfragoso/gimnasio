@@ -240,7 +240,7 @@ const showForm = ref(true);
                                         type="date"
                                         class="mt-1 block w-full"
                                         autocomplete="current-password"
-                                        disabled
+
                                     />
                                     <InputError class="mt-2" />
                                 </div>
@@ -266,7 +266,7 @@ const showForm = ref(true);
                                         class="ml-4"
                                         id="btn-menu"
                                         @click="togglePopUp()"
-                                        disabled
+                                        
                                     >
                                         Crear
                                     </Button>

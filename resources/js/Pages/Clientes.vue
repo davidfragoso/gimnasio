@@ -36,30 +36,74 @@ const showForm = ref(true);
                         class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
                     >
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="flex justify-center" id="t-container">
+                            <div class="flex justify-center">
                                 <h1 id="titulo">LISTA DE CLIENTES</h1>
                             </div>
-                            <form id="form-clients">
-                                <div class="fila" style="border-bottom: 2px solid #fcaf09">
-                                    <Label id="label-txt">ID</Label>
-                                    <Label id="label-txt">Nombre</Label>
-                                    <Label id="label-txt">Apellido</Label>
-                                    <Label id="label-txt">Correo</Label>
-                                    <Label id="label-txt">Estatus</Label>
-                                </div>
-                                <div class="fila">
-                                    <table  style="width: 100%;">
-                                        <tr  style="display: flex;justify-content: space-between;">
-                                            <td><Label id="label-txt">01</Label></td>
-                                            <td><Label id="label-txt">Manolo</Label></td>
-                                            <td><Label id="label-txt">Sanchez</Label></td>
-                                            <td><Label id="label-txt">MSanchez@mail.com</Label></td>
-                                            <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
-                                            <td><Label id="label-txt">Vigente</Label></td>
-                                        </tr>
+                            <div id="form-clients">
+                                <div>
+                                    <table>
+                                        <thead>
+                                            <tr class="fila" style="border-bottom: 2px solid #fcaf09;">
+                                                <th>
+                                                    <Label id="label-txt"
+                                                        >ID</Label
+                                                    >
+                                                </th>
+                                                <th>
+                                                    <Label id="label-txt"
+                                                        >Nombre</Label
+                                                    >
+                                                </th>
+                                                <th>
+                                                    <Label id="label-txt"
+                                                        >Apellido</Label
+                                                    >
+                                                </th>
+                                                <th>
+                                                    <Label id="label-txt"
+                                                        >Correo</Label
+                                                    >
+                                                </th>
+                                                <th>
+                                                    <Label id="label-txt"
+                                                        >Estatus</Label
+                                                    >
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="fila">
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >01</Label
+                                                    >
+                                                </td>
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >Manolo</Label
+                                                    >
+                                                </td>
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >Sanchez</Label
+                                                    >
+                                                </td>
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >MSanchez@mail.com</Label
+                                                    >
+                                                </td>
+                                                <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
+                                                <td>
+                                                    <Label id="label-txt"
+                                                        >Vigente</Label
+                                                    >
+                                                </td>                                               
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
