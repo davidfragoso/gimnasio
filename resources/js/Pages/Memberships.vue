@@ -1,12 +1,159 @@
 <script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
+import axios from "axios";
 import BarcodeScanner from "@/Components/BarcodeScanner.vue";
 
+const userIds = ref([]);
 const showList = ref(false);
 const showForm = ref(true);
+const memberships = ref([]);
+
+// Variables reactivas para almacenar los datos del formulario
+const duracionMembresia = ref(0);
+const fechaInicio = ref(getCurrentDate());
+const importeConDescuento = ref(0);
+const barcodeData = ref("");
+const barcodeUrl = ref("");
+const clienteSeleccionado = ref(null);
+
+function getCurrentDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
+// Función para calcular la fecha final y el importe con descuento
+function calcularFechaFinal() {
+    if (!fechaInicio.value) return;
+    const inicio = new Date(fechaInicio.value);
+    const final = new Date(inicio);
+
+    final.setMonth(final.getMonth() + parseInt(duracionMembresia.value));
+
+    // Aplicar el descuento si la duración es mayor a 3, 6 o 12 meses
+    let descuento = 0;
+    if (parseInt(duracionMembresia.value) >= 3) {
+        if (parseInt(duracionMembresia.value) >= 6) {
+            if (parseInt(duracionMembresia.value) >= 12) {
+                descuento = 0.15;
+            } else {
+                descuento = 0.1;
+            }
+        } else {
+            descuento = 0.05;
+        }
+    }
+
+    // Calcular el importe con descuento
+    const precioBase = 250;
+    const importe = precioBase * parseInt(duracionMembresia.value);
+    const importeFinal = importe - importe * descuento;
+
+    importeConDescuento.value = importeFinal.toFixed(2);
+
+    const fechaFinalFormateada = final.toISOString().split("T")[0];
+    return fechaFinalFormateada;
+}
+
+async function logSelectedCliente() {
+    console.log('Método logSelectedCliente llamado');
+    console.log('Cliente seleccionado:', clienteSeleccionado.value);
+}
+const fechaFinal = computed(() => calcularFechaFinal());
+
+async function obtenerIdsUsuarios() {
+    try {
+        const response = await axios.get("/usuarios-membresias");
+        userIds.value = response.data.map((user) => user.id);
+        memberships.value = response.data;
+    } catch (error) {
+        console.error(
+            "Error al obtener los IDs de los usuarios con membresías:",
+            error
+        );
+    }
+}
+
+onMounted(() => {
+    obtenerIdsUsuarios();
+    calcularFechaFinal();
+});
+
+// Método o variable computada para determinar si los campos del formulario están completos
+const isFormCompleted = computed(() => {
+    // Aquí puedes agregar la lógica para verificar si los campos del formulario están completos
+    return duracionMembresia.value > 0; // Por ejemplo, aquí se verifica si la duración de la membresía ha sido seleccionada
+});
+
+async function saveMembership() {
+    try {
+        const response = await axios.post("/membership/store", {
+            cliente_id: clienteSeleccionado.value.id_cliente,
+            f_inicio: fechaInicio.value,
+            f_final: fechaFinal.value,
+            estatus: 1,
+            importe: importeConDescuento.value,
+            barcode: barcodeData.value,
+        });
+        
+        // Verificar el estado de la solicitud
+        if (response.status === 200 || response.status === 201) {
+            // La solicitud fue exitosa, hacer algo con los datos devueltos
+            console.log("Solicitud exitosa:", response.data);
+        } else {
+            // La solicitud falló, manejar el error
+            console.error("Error en la solicitud:", response.statusText);
+        }
+    } catch (error) {
+        // Error al realizar la solicitud, manejar el error
+        console.error("Error al realizar la solicitud:", error.message);
+    }
+}
+
+async function handleGenerateBarcode() {
+    // Verifica si los campos del formulario están completos
+    if (!isFormCompleted.value) {
+        alert("Por favor, complete los campos del formulario primero.");
+        return;
+    }
+
+    // Verifica si se ha seleccionado algún cliente
+    if (!clienteSeleccionado.value || !clienteSeleccionado.value.id_cliente) {
+        alert("No se ha seleccionado ningún cliente válido.");
+        return;
+    }
+
+    // Verifica si ya se ha generado el código de barras y se ha llamado a saveMembership()
+    if (barcodeData.value) {
+        alert("El código de barras ya ha sido generado.");
+        return;
+    }
+
+    // Genera el código de barras automáticamente aquí
+    // Por ejemplo, generando un valor aleatorio de 9 dígitos
+    barcodeData.value = 'GYM-' + Math.floor(100000000 + Math.random() * 900000000);
+
+    // Llama a generateBarcodeUrl() para actualizar la URL del código de barras
+    generateBarcodeUrl();
+}
+
+function generateBarcodeUrl() {
+    // Generar el valor del código de barras automáticamente aquí
+    // Por ejemplo, generando un valor aleatorio de 9 dígitos
+    barcodeData.value = 'GYM-' + Math.floor(100000000 + Math.random() * 900000000);
+
+    // Generar la URL del código de barras
+    const code = 'Code39'; 
+    const baseUrl = 'https://barcode.tec-it.com/barcode.ashx';
+    const url = `${baseUrl}?data=${barcodeData.value}&code=${code}`;
+    barcodeUrl.value = url;
+}
 </script>
+
 
 <template>
 
@@ -46,72 +193,84 @@ const showForm = ref(true);
                                                     <Label id="label-txt">ID</Label>
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt">Nombre</Label>
+                                                    <Label id="label-txt"
+                                                        >Nombre Completo</Label
+                                                    >
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt">Apellido</Label>
+                                                    <Label id="label-txt"
+                                                        >Fecha Inicio</Label
+                                                    >
                                                 </th>
                                                 <th>
-                                                    <Label id="label-txt">Correo</Label>
+                                                    <Label id="label-txt"
+                                                        >Fecha Fin</Label
+                                                    >
                                                 </th>
                                                 <th>
                                                     <Label id="label-txt">Estatus</Label>
                                                 </th>
+                                                <th>
+                                                    <Label id="label-txt"
+                                                        >Importe</Label
+                                                    >
+                                                </th>
+                                                <th>
+                                                    <Label id="label-txt"
+                                                        >Barcode</Label
+                                                    >
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="fila">
+                                            <tr
+                                                v-for="membership in memberships"
+                                                :key="membership.id"
+                                                class="fila"
+                                            >
                                                 <td>
-                                                    <Label id="label-txt">01</Label>
+                                                    <Label id="label-txt">{{
+                                                        membership.id_membership
+                                                    }}</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt">Manolo</Label>
+                                                    <Label id="label-txt">{{
+                                                        membership.cliente
+                                                            ? membership.cliente
+                                                                  .nombre +
+                                                              " " +
+                                                              membership.cliente
+                                                                  .apellido
+                                                            : "N/A"
+                                                    }}</Label>
+                                                </td>
+
+                                                <td>
+                                                    <Label id="label-txt">{{
+                                                        membership.f_inicio
+                                                    }}</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt">Sanchez</Label>
+                                                    <Label id="label-txt">{{
+                                                        membership.f_final
+                                                    }}</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt">MSanchez@mail.com</Label>
-                                                </td>
-                                                <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
-                                                <td>
-                                                    <Label id="label-txt">Vigente</Label>
-                                                </td>
-                                            </tr>
-                                            <tr class="fila">
-                                                <td>
-                                                    <Label id="label-txt">01</Label>
+                                                    <Label id="label-txt">{{
+                                                        membership.estatus === 1
+                                                            ? "Vigente"
+                                                            : "Vencido"
+                                                    }}</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt">Manolo</Label>
+                                                    <Label id="label-txt">{{
+                                                        membership.importe
+                                                    }}</Label>
                                                 </td>
                                                 <td>
-                                                    <Label id="label-txt">Sanchez</Label>
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt">MSanchez@mail.com</Label>
-                                                </td>
-                                                <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
-                                                <td>
-                                                    <Label id="label-txt">Vigente</Label>
-                                                </td>
-                                            </tr>
-                                            <tr class="fila">
-                                                <td>
-                                                    <Label id="label-txt">01</Label>
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt">Manolo</Label>
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt">Sanchez</Label>
-                                                </td>
-                                                <td>
-                                                    <Label id="label-txt">MSanchez@mail.com</Label>
-                                                </td>
-                                                <!--Para el estatus hay que hacer una comparacion de que si en la bd status es igual a 1 se escriba "vigente", de lo contrario "vencido"-->
-                                                <td>
-                                                    <Label id="label-txt">Vigente</Label>
+                                                    <Label id="label-txt">{{
+                                                        membership.barcode
+                                                    }}</Label>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -133,7 +292,11 @@ const showForm = ref(true);
                                     <h1 id="titulo">REGISTRO DE MEMBRESÍAS</h1>
                                 </div>
                             </div>
-                            <form id="form-memb" class="grid grid-cols-2 gap-4">
+                            <form
+                                id="form-memb"
+                                class="grid grid-cols-2 gap-4"
+                                @submit.prevent="handleGenerateBarcode"
+                            >
                                 <div>
                                     <h1 class="form_title">
                                         Datos de la membresia
@@ -141,20 +304,33 @@ const showForm = ref(true);
                                 </div>
                                 <div></div>
                                 <div>
-                                    <Label class="label-txt" id="Nombre">Cliente</Label><br />
-                                    <select name="clientes" class="mt-1 block w-full select-clients" id="clientes"
-                                        required>
-                                        <option value="">Nombre 1</option>
-                                        <option value="">Nombre 2</option>
-                                        <option value="">Nombre 3</option>
-                                        <option value="">Nombre 4</option>
+                                    <Label class="label-txt" id="Nombre"
+                                        >Cliente</Label
+                                    ><br />
+                                    <select v-model="clienteSeleccionado" @change="logSelectedCliente">
+                                        <option value="#">Seleccionar...</option>
+                                        <option :value="membership.cliente" v-for="membership in memberships" :key="membership.id">
+                                            {{
+                                                membership.cliente
+                                                    ? membership.cliente.nombre + " " + membership.cliente.apellido
+                                                    : "N/A"
+                                            }}
+                                        </option>
                                     </select>
+                                    
+
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
-                                    <Label class="label-txt" id="Nombre">Mensualidades</Label><br />
-                                    <select name="clientes" class="mt-1 block w-full select-clients" id="clientes"
-                                        required>
+                                    <Label class="label-txt"
+                                        >Mensualidades</Label
+                                    ><br />
+                                    <select
+                                        v-model="duracionMembresia"
+                                        class="mt-1 block w-full select-clients"
+                                        required
+                                    >
+                                        <option value="">Seleccionar...</option>
                                         <option value="1">1 MES</option>
                                         <option value="2">2 MESES</option>
                                         <option value="3">3 MESES</option>
@@ -164,17 +340,34 @@ const showForm = ref(true);
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
-                                    <Label class="label-txt">Fecha Inicio</Label><br />
-                                    <Input id="" type="date" class="mt-1 block w-full input-form" required />
+                                    <Label class="label-txt">Fecha Inicio</Label
+                                    ><br />
+                                    <input
+                                        v-model="fechaInicio"
+                                        type="date"
+                                        class="mt-1 block w-full"
+                                        required
+                                        @change="calcularFechaFinal"
+                                    />
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
-                                    <Label class="label-txt">Fecha Final</Label><br />
-                                    <Input id="" type="date" class="mt-1 block w-full input-form" />
+                                    <Label class="label-txt">Fecha Final</Label
+                                    ><br />
+                                    <input
+                                        v-model="fechaFinal"
+                                        type="date"
+                                        class="mt-1 block w-full"
+                                        autocomplete="current-password"
+                                        disabled
+                                    />
                                     <InputError class="mt-2" />
                                 </div>
+
                                 <div>
-                                    <Label class="label-txt">Importe</Label><br />
+                                    <Label class="label-txt">Importe</Label
+                                    ><br />
+
                                     <div class="input-group mt-1">
                                         <input id="importe" type="text" class="form-control input-form" required
                                             autofocus style="padding-left: 3rem" maxlength="5" />
@@ -190,7 +383,9 @@ const showForm = ref(true);
                                     <InputError class="mt-2" />
                                 </div>
                                 <div>
-                                    <BarcodeScanner />
+                                    <BarcodeScanner
+                                        :formCompleted="isFormCompleted"
+                                    />
                                 </div>
                                 <div class="col-span-2 flex justify-center mt-4">
                                     <Button class="ml-4" id="btn-menu" @click="togglePopUp()">
@@ -332,6 +527,10 @@ const showForm = ref(true);
     position: relative;
 }
 
+Input {
+    text-align: end;
+    color: #2e3133;
+}
 .input-group-text {
     background-color: #f0f0f0;
     border: 1px solid #ced4da;
@@ -341,7 +540,7 @@ const showForm = ref(true);
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #495057;
+    color: #2e3133;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
@@ -390,7 +589,7 @@ table {
 
 th,
 td {
-    width: 200px;
+    width: 150px;
     padding: 8px;
     --word-wrap: break-word;
     text-align: center;
